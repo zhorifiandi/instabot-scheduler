@@ -32,7 +32,7 @@ def start_smart_run(arguments):
     influencers = arguments['influencers'][0]
 
     # get a session!
-    session = InstaPy(username=username, password=passkey, headless_browser=True)
+    session = InstaPy(username=username, password=passkey, bypass_suspicious_attempt=True, headless_browser=True)
     business_target = str(influencers).split(',')
 
     # let's go! :>
