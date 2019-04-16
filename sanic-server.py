@@ -1,5 +1,6 @@
 from sanic import Sanic
 from sanic.response import json, text
+import os
 
 from rq import Queue
 from worker import conn
@@ -33,4 +34,5 @@ async def start_instabot(request):
     return message
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=7777)
+    port = os.environ.get('PORT', 8000)
+    app.run(host='0.0.0.0', port=port)
