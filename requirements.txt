@@ -1,3 +1,4 @@
 instapy
 sanic
 rq
+instapy-chromedriver
