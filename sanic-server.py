@@ -6,6 +6,7 @@ from rq import Queue
 from worker import conn
 
 from jobs.instabot import start_smart_run
+from jobs.instabot_api import run_the_bot
 
 
 q = Queue(connection=conn, default_timeout=-1)
@@ -27,6 +28,23 @@ async def start_instabot(request):
 
     if arguments_valid:
         job = q.enqueue(start_smart_run, arguments)
+        message = json({'message': 'Job Submitted', 'job_id': job.id})
+    else:
+        message = json({'error': 'Invalid Arguments'})
+
+    return message
+
+@app.route('/start-instabot-api')
+async def start_instabot(request):
+    arguments = request.args
+    arguments_valid = True
+    for attr in ['username', 'passkey', 'hashtags', 'target_nickname']:
+        if not (attr in arguments.keys()):
+            arguments_valid = False
+            break
+
+    if arguments_valid:
+        job = q.enqueue(run_the_bot, arguments)
         message = json({'message': 'Job Submitted', 'job_id': job.id})
     else:
         message = json({'error': 'Invalid Arguments'})
