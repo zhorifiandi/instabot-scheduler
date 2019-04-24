@@ -7,6 +7,7 @@ from worker import conn
 
 from jobs.instabot import start_smart_run
 from jobs.instabot_api import run_the_bot
+from jobs.hashtags import generate_hashtags
 
 
 q = Queue(connection=conn, default_timeout=-1)
@@ -16,6 +17,11 @@ app = Sanic()
 @app.route('/_healthz')
 async def test(request):
     return json({'status': 'ok'})
+
+@app.route('/hashtags')
+async def test(request):
+    hashtag_set = generate_hashtags()
+    return hashtag_set
 
 @app.route('/start-instabot')
 async def start_instabot(request):
