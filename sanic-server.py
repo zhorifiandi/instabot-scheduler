@@ -21,7 +21,7 @@ async def test(request):
 @app.route('/hashtags')
 async def test(request):
     hashtag_set = generate_hashtags()
-    return hashtag_set
+    return text(hashtag_set)
 
 @app.route('/start-instabot')
 async def start_instabot(request):
