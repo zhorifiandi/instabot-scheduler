@@ -20,7 +20,11 @@ async def test(request):
 
 @app.route('/hashtags')
 async def test(request):
-    hashtag_set = generate_hashtags()
+    arguments = request.args
+    version = ""
+    if arguments.get('version') != None:
+        version = arguments['version'][0]
+    hashtag_set = generate_hashtags(version)
     return text(hashtag_set)
 
 @app.route('/start-instabot')
